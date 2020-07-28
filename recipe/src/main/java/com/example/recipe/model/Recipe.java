@@ -4,6 +4,8 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,8 +31,9 @@ public class Recipe {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
 	private Set<Ingredient> ingredients;
 	
+	@Enumerated(value = EnumType.STRING)
+	private Difficulty difficulty;
 	
-	//private Difficulty difficulty;
 	@Lob
 	private byte[] image;
 	
@@ -102,6 +105,12 @@ public class Recipe {
 	}
 	public void setIngredients(Set<Ingredient> ingredients) {
 		this.ingredients = ingredients;
+	}
+	public Difficulty getDifficulty() {
+		return difficulty;
+	}
+	public void setDifficulty(Difficulty difficulty) {
+		this.difficulty = difficulty;
 	}
 	
 	
