@@ -1,5 +1,6 @@
 package com.example.recipe.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -32,7 +33,7 @@ public class Recipe {
 	private String directions;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-	private Set<Ingredient> ingredients;
+	private Set<Ingredient> ingredients = new HashSet<>();
 	
 	@Enumerated(value = EnumType.STRING)
 	private Difficulty difficulty;
@@ -47,7 +48,7 @@ public class Recipe {
 	@JoinTable(name = "recipe_category", 
 		joinColumns = @JoinColumn(name = "recipe_id"), 
 		inverseJoinColumns = @JoinColumn(name ="category_id"))
-	private Set<Category> categories;
+	private Set<Category> categories = new HashSet<>();
 	
 	public Long getId() {
 		return id;
