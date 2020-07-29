@@ -10,17 +10,17 @@ import com.example.recipe.model.Category;
 import com.example.recipe.model.UnitOfMeasure;
 import com.example.recipe.repository.CategoryRepository;
 import com.example.recipe.repository.UnitOfMeasureRepository;
+import com.example.recipe.service.RecipeService;
 
 @Controller
 public class IndexController {
 	
-	private CategoryRepository categoryRepo;
-	private UnitOfMeasureRepository unitOfMeasureRepo;
+	private final RecipeService service;
 	
 	
-	public IndexController(CategoryRepository categoryRepo, UnitOfMeasureRepository unitOfMeasureRepo) {
-		this.categoryRepo = categoryRepo;
-		this.unitOfMeasureRepo = unitOfMeasureRepo;
+
+	public IndexController(RecipeService service) {
+		this.service = service;
 	}
 
 
@@ -28,11 +28,7 @@ public class IndexController {
 	@RequestMapping({" ","/","index","index.html"})
 	public String getRecipeList(Model model) {
 		
-		Optional<Category> categoryOptionaal = categoryRepo.findByDescription("Italian");
-		Optional<UnitOfMeasure> unitOfMeasureOptional = unitOfMeasureRepo.findByUom("Ounce");
-		
-		System.out.println("Category ID :"+categoryOptionaal.get().getId());
-		System.out.println("Unit Of Measure ID :"+unitOfMeasureOptional.get().getId());
+		model.addAttribute("recipeList", service.getRecipes());
 		return "index";
 		
 	}

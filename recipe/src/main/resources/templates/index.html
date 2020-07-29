@@ -18,9 +18,9 @@
 		<th>Recipe Title</th>
 		<th>Recipe</th>
 	</tr>
-	<tr>
-		<td >sdfgh</td>
-		<td>yuhoosdfghj</td>
+	<tr th:each="recipe : ${recipeList}">
+		<td th:text="${recipe.id}"></td>
+		<td th:text="${recipe.description}"></td>
 	</tr>
 </table>
 </body>
