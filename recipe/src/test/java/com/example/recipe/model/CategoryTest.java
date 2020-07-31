@@ -1,6 +1,6 @@
 package com.example.recipe.model;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,6 +19,7 @@ class CategoryTest {
 	void testGetId() {
 		Long idValue = 5l;
 		category.setId(idValue);
+		
 		
 		assertEquals(idValue, category.getId());
 	}
