@@ -3,26 +3,35 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>My recipe list</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
 </head>
 <body>
-<h1>Recipe!!</h1>
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="ISO-8859-1">
-<title>My recipe list</title>
-</head>
-<body>
-<table>
-	<tr>
-		<th>Recipe Title</th>
-		<th>Recipe</th>
-	</tr>
-	<tr th:each="recipe : ${recipeList}">
-		<td th:text="${recipe.id}"></td>
-		<td th:text="${recipe.description}"></td>
-	</tr>
-</table>
+<div class="container-fluid" style="margin-top:20px">
+	<div class="row">
+		<div class="col-md-6 col-mf-offset-3">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h1 class="panel-title">My recipe list</h1>
+				</div>
+				<div class="panel-body">
+		
+				<table>
+					<tr>
+						<th>Recipe Title</th>
+						<th>Recipe</th>
+					</tr>
+					<tr th:each="recipe : ${recipeList}">
+						<td th:text="${recipe.id}"></td>
+						<td th:text="${recipe.description}"></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>			
 </body>
 </html>
 </body>

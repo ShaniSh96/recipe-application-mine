@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.recipe.model.Category;
 import com.example.recipe.model.Difficulty;
@@ -19,6 +20,9 @@ import com.example.recipe.repository.CategoryRepository;
 import com.example.recipe.repository.RecipeRepository;
 import com.example.recipe.repository.UnitOfMeasureRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
 
@@ -78,6 +82,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
 			throw new RuntimeException("Expected UOM not found");
 		}
 		
+		log.debug("Getting all Units of Measure");
 		
 		UnitOfMeasure eachUom = eachOptional.get();
 		UnitOfMeasure dashUom = dashOptional.get();
@@ -126,6 +131,8 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
 		guacNote.setRecipeNotes("Once you have basic guacamole down, feel free to experiment with variations including strawberries, peaches, pineapple, mangoes, even watermelon. One classic Mexican guacamole has pomegranate seeds and chunks of peaches in it ");
 		guacNote.setRecipe(guacamouli);
 		
+		log.debug("setting note to the recipe");
+		
 		guacamouli.setNotes(guacNote);
 		
 		guacamouli.getIngredients().add(new Ingredient("Ripe Avcado", new BigDecimal(2), eachUom,guacamouli));
@@ -146,6 +153,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>{
 
 
 	@Override
+	@Transactional
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		recipeRepo.saveAll(getRecipe());
 	}
