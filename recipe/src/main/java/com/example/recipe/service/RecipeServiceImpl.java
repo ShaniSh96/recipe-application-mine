@@ -1,7 +1,10 @@
 package com.example.recipe.service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
+
+import javax.management.RuntimeErrorException;
 
 import org.springframework.stereotype.Service;
 
@@ -28,6 +31,17 @@ public class RecipeServiceImpl implements RecipeService{
 		repo.findAll().forEach(recipe -> myRecipe.add(recipe));
 		return myRecipe;
 	}
+
+	@Override
+	public Recipe findById(Long id) {
+		Optional<Recipe> recipe = repo.findById(id);
+		if(!recipe.isPresent()) {
+			throw new RuntimeException("Recipe not found!");
+		}
+		return recipe.get();
+	}
+	
+	
 	
 	
 	
