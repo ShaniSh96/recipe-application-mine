@@ -7,7 +7,11 @@ import java.util.Set;
 import javax.management.RuntimeErrorException;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.example.recipe.command.RecipeCommand;
+import com.example.recipe.converter.RecipeCommandToRecipe;
+import com.example.recipe.converter.RecipeToRecipeCommand;
 import com.example.recipe.model.Recipe;
 import com.example.recipe.repository.RecipeRepository;
 
@@ -18,9 +22,16 @@ import lombok.extern.slf4j.Slf4j;
 public class RecipeServiceImpl implements RecipeService{
 
 	private final RecipeRepository repo;
+	private final RecipeCommandToRecipe recipeCommandToRecipe;
+	private final RecipeToRecipeCommand recipeToRecipeCommand;
 
-	public RecipeServiceImpl(RecipeRepository repo) {
+	
+
+	public RecipeServiceImpl(RecipeRepository repo, RecipeCommandToRecipe recipeCommandToRecipe,
+			RecipeToRecipeCommand recipeToRecipeCommand) {
 		this.repo = repo;
+		this.recipeCommandToRecipe = recipeCommandToRecipe;
+		this.recipeToRecipeCommand = recipeToRecipeCommand;
 	}
 
 	@Override
@@ -40,6 +51,16 @@ public class RecipeServiceImpl implements RecipeService{
 		}
 		return recipe.get();
 	}
+
+	@Override
+    @Transactional
+    public RecipeCommand saveRecipeCommand(RecipeCommand command) {
+        Recipe detachedRecipe = recipeCommandToRecipe.convert(command);
+
+        Recipe savedRecipe = repo.save(detachedRecipe);
+        log.debug("Saved RecipeId:" + savedRecipe.getId());
+        return recipeToRecipeCommand.convert(savedRecipe);
+    }
 	
 	
 	
