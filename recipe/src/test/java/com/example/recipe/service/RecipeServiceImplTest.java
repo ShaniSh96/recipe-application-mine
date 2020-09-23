@@ -14,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.example.recipe.converter.RecipeCommandToRecipe;
+import com.example.recipe.converter.RecipeToRecipeCommand;
 import com.example.recipe.model.Recipe;
 import com.example.recipe.repository.RecipeRepository;
 
@@ -24,10 +26,16 @@ class RecipeServiceImplTest {
 	@Mock
 	RecipeRepository repository;
 	
+	@Mock
+	RecipeCommandToRecipe rctr;
+	
+	@Mock
+	RecipeToRecipeCommand rtrc;
+	
 	@BeforeEach
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		impl = new RecipeServiceImpl(repository);
+		impl = new RecipeServiceImpl(repository, rctr, rtrc);
 	}
 	
 	@Test
