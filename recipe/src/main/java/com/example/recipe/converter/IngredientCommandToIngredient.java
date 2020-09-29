@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.example.recipe.command.IngredientCommand;
 import com.example.recipe.model.Ingredient;
+import com.example.recipe.model.Recipe;
 
 import lombok.Synchronized;
 
@@ -25,13 +26,19 @@ public class IngredientCommandToIngredient implements Converter<IngredientComman
 		if(source == null)
 			return null;
 		
-		Ingredient ingredient = new Ingredient();
-		ingredient.setId(source.getId());
-		ingredient.setAmount(source.getAmount());
-		ingredient.setDescription(source.getDescription());
-		ingredient.setUom(uomConverter.convert(source.getUom()));
-		
-		return ingredient;
+		final Ingredient ingredient = new Ingredient();
+
+		if(source.getRecipeId() != null){
+            Recipe recipe = new Recipe();
+            recipe.setId(source.getRecipeId());
+            ingredient.setRecipe(recipe);
+            recipe.addIngredient(ingredient);
+        }
+
+        ingredient.setAmount(source.getAmount());
+        ingredient.setDescription(source.getDescription());
+        ingredient.setUom(uomConverter.convert(source.getUom()));
+        return ingredient;
 	}
 
 }
